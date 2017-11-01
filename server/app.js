@@ -1,4 +1,4 @@
-//import libraries
+// import libraries
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
@@ -7,13 +7,14 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
+const session = require('express-session');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/DomoMaker';
 
 mongoose.connect(dbURL, (err) => {
-  if(err) {
+  if (err) {
     console.log('Could not connect to database');
     throw err;
   }
@@ -28,7 +29,13 @@ app.use(compression());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
-app.engine('handlebars', expressHandlebars({defaultLayout: 'main'}));
+app.use(session({
+  key: 'sessionid',
+  secret: 'Domo Arigato',
+  resave: true,
+  saveUninitialized: true,
+}));
+app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 app.set('views', `${__dirname}/../views`);
 app.use(cookieParser());
@@ -36,9 +43,9 @@ app.use(cookieParser());
 router(app);
 
 app.listen(port, (err) => {
-  if(err) {
+  if (err) {
     throw err;
   }
-  
+
   console.log(`listening on port ${port}`);
 });
