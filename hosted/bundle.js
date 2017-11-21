@@ -1,58 +1,66 @@
 "use strict";
 
-var handleDomo = function handleDomo(e) {
+var handleJoke = function handleJoke(e) {
   e.preventDefault();
 
   $("#domoMessage").animate({ width: 'hide' }, 350);
 
-  if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
+  if ($("#joke").val() == '') {
     handleError("RAWR! All fields are required");
     return false;
   }
 
-  sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function () {
+  sendAjax('POST', $("#jokeForm").attr("action"), $("#domoForm").serialize(), function () {
     loadDomosFromServer();
   });
 
   return false;
 };
 
-var DomoForm = function DomoForm(props) {
+var GetJoke = function GetJoke(props) {
   return React.createElement(
     "form",
-    { id: "domoForm",
-      onSubmit: handleDomo,
-      name: "domoForm",
+    { id: "getJoke",
+      onSubmit: handleJoke,
+      name: "getJoke",
       action: "/maker",
       method: "POST",
-      className: "domoForm"
+      className: "getJoke"
     },
-    React.createElement(
-      "label",
-      { htmlFor: "name" },
-      "Name: "
-    ),
-    React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
-    React.createElement(
-      "label",
-      { htmlForm: "age" },
-      "Age: "
-    ),
-    React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
-    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+    React.createElement("input", { className: "randomJoke", type: "submit", value: "Get a random dad joke" })
   );
 };
 
-var DomoList = function DomoList(props) {
-  if (props.domos.length === 0) {
+var JokeForm = function JokeForm(props) {
+  return React.createElement(
+    "form",
+    { id: "jokeForm",
+      onSubmit: handleJoke,
+      name: "jokeForm",
+      action: "/maker",
+      method: "POST",
+      className: "jokeForm"
+    },
+    React.createElement(
+      "label",
+      { htmlFor: "jokePunch" },
+      "Joke: "
+    ),
+    React.createElement("input", { id: "jokeName", type: "text", name: "jokePunch", placeholder: "Bad dad joke" }),
+    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+    React.createElement("input", { className: "makeJokeSubmit", type: "submit", value: "Create Joke" })
+  );
+};
+
+var JokeList = function JokeList(props) {
+  if (props.jokes.length === 0) {
     return React.createElement(
       "div",
       { className: "domoList" },
       React.createElement(
         "h3",
         { className: "emptyDomo" },
-        "No Domos yet"
+        "No horrible Dad Jokes yet"
       )
     );
   }
@@ -60,8 +68,8 @@ var DomoList = function DomoList(props) {
   var domoNodes = props.domos.map(function (domo) {
     return React.createElement(
       "div",
-      { "let": domo._id, className: "domo" },
-      React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "domo face", className: "domoFace" }),
+      { "let": domo._id, className: "joke" },
+      React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "dad", className: "domoFace" }),
       React.createElement(
         "h3",
         { className: "domoName" },
@@ -86,16 +94,16 @@ var DomoList = function DomoList(props) {
 
 var loadDomosFromServer = function loadDomosFromServer() {
   sendAjax('GET', '/getDomos', null, function (data) {
-    ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
+    ReactDOM.render(React.createElement(DomoList, { jokes: data.jokes }), document.querySelector("#domos"));
   });
 };
 
 var setup = function setup(csrf) {
-  ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
+  ReactDOM.render(React.createElement(GetJoke, { csrf: csrf }), document.querySelector("#getJokes"));
+  
+  ReactDOM.render(React.createElement(JokeForm, { csrf: csrf }), document.querySelector("#makeJoke"));
 
-  ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
-
-  loadDomosFromServer();
+  ReactDOM.render(React.createElement(JokeList, { jokes: [] }), document.querySelector("#jokes"));
 };
 
 var getToken = function getToken() {
