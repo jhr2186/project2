@@ -5,13 +5,13 @@ var handleJoke = function handleJoke(e) {
 
   $("#domoMessage").animate({ width: 'hide' }, 350);
 
-  if ($("#joke").val() == '') {
-    handleError("RAWR! All fields are required");
+  if ($("#jokeName").val() === '') {
+    handleError("Wurst Joke Ever");
     return false;
   }
 
-  sendAjax('POST', $("#jokeForm").attr("action"), $("#domoForm").serialize(), function () {
-    loadDomosFromServer();
+  sendAjax('POST', $("#jokeForm").attr("action"), $("#jokeForm").serialize(), function () {
+    loadJokesFromServer();
   });
 
   return false;
@@ -27,6 +27,7 @@ var GetJoke = function GetJoke(props) {
       method: "POST",
       className: "getJoke"
     },
+    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
     React.createElement("input", { className: "randomJoke", type: "submit", value: "Get a random dad joke" })
   );
 };
@@ -46,7 +47,7 @@ var JokeForm = function JokeForm(props) {
       { htmlFor: "jokePunch" },
       "Joke: "
     ),
-    React.createElement("input", { id: "jokeName", type: "text", name: "jokePunch", placeholder: "Bad dad joke" }),
+    React.createElement("input", { id: "jokeName", type: "text", name: "joke", placeholder: "Bad dad joke" }),
     React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
     React.createElement("input", { className: "makeJokeSubmit", type: "submit", value: "Create Joke" })
   );
@@ -59,42 +60,35 @@ var JokeList = function JokeList(props) {
       { className: "domoList" },
       React.createElement(
         "h3",
-        { className: "emptyDomo" },
+        { className: "emptyJoke" },
         "No horrible Dad Jokes yet"
       )
     );
   }
 
-  var domoNodes = props.domos.map(function (domo) {
+  var jokeNodes = props.jokes.map(function (joke) {
     return React.createElement(
       "div",
-      { "let": domo._id, className: "joke" },
-      React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "dad", className: "domoFace" }),
+      { "let": joke._id, className: "joke" },
       React.createElement(
         "h3",
-        { className: "domoName" },
-        "Name: ",
-        domo.name
+        { className: "jokePunch" },
+        "Joke: ",
+        joke.joke
       ),
-      React.createElement(
-        "h3",
-        { className: "domoAge" },
-        "Age: ",
-        domo.age
-      )
     );
   });
 
   return React.createElement(
     "div",
-    { className: "domoList" },
-    domoNodes
+    { className: "jokeList" },
+    jokeNodes
   );
 };
 
-var loadDomosFromServer = function loadDomosFromServer() {
-  sendAjax('GET', '/getDomos', null, function (data) {
-    ReactDOM.render(React.createElement(DomoList, { jokes: data.jokes }), document.querySelector("#domos"));
+var loadJokesFromServer = function loadJokesFromServer() {
+  sendAjax('GET', '/getJokes', null, function (data) {
+    ReactDOM.render(React.createElement(JokeList, { jokes: data.jokes }), document.querySelector("#jokes"));
   });
 };
 
@@ -104,6 +98,8 @@ var setup = function setup(csrf) {
   ReactDOM.render(React.createElement(JokeForm, { csrf: csrf }), document.querySelector("#makeJoke"));
 
   ReactDOM.render(React.createElement(JokeList, { jokes: [] }), document.querySelector("#jokes"));
+  
+  loadJokesFromServer();
 };
 
 var getToken = function getToken() {
@@ -117,7 +113,6 @@ $(document).ready(function () {
 
   console.log("document ready");
 });
-"use strict";
 
 var handleError = function handleError(message) {
   $("#errorMessage").text(message);
@@ -138,7 +133,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
     dataType: "json",
     success: success,
     error: function error(xhr, status, _error) {
-      var messageOb = JSON.parse(xhr.responseText);
+      var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
   });

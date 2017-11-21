@@ -105,7 +105,7 @@ var createLoginWindow = function createLoginWindow(csrf) {
 var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#logins"));
   
-  document.body.style.minWidth = 1095;
+  document.body.style.minWidth = 1000;
 };
 
 var setup = function setup(csrf) {
