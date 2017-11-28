@@ -35,6 +35,7 @@ const makeJoke = (req, res) => {
 
   const jokeData = {
     joke: req.body.joke,
+    score: req.body.score,
     owner: req.session.account._id,
   };
 

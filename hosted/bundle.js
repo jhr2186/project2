@@ -17,21 +17,6 @@ var handleJoke = function handleJoke(e) {
   return false;
 };
 
-var GetJoke = function GetJoke(props) {
-  return React.createElement(
-    "form",
-    { id: "getJoke",
-      onSubmit: handleJoke,
-      name: "getJoke",
-      action: "/maker",
-      method: "POST",
-      className: "getJoke"
-    },
-    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "randomJoke", type: "submit", value: "Get a random dad joke" })
-  );
-};
-
 var JokeForm = function JokeForm(props) {
   return React.createElement(
     "form",
@@ -76,6 +61,12 @@ var JokeList = function JokeList(props) {
         "Joke: ",
         joke.joke
       ),
+      React.createElement(
+        "h5",
+        {className: "jokeScore" },
+        "Score: ",
+        joke.score,
+      ),
     );
   });
 
@@ -93,8 +84,6 @@ var loadJokesFromServer = function loadJokesFromServer() {
 };
 
 var setup = function setup(csrf) {
-  ReactDOM.render(React.createElement(GetJoke, { csrf: csrf }), document.querySelector("#getJokes"));
-  
   ReactDOM.render(React.createElement(JokeForm, { csrf: csrf }), document.querySelector("#makeJoke"));
 
   ReactDOM.render(React.createElement(JokeList, { jokes: [] }), document.querySelector("#jokes"));

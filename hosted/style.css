@@ -24,10 +24,6 @@ html, body {
   border-bottom: 1px solid black;
 }
 
-#getJokes {
-  min-width: 0px;
-}
-
 #makeJoke {
   width: 90%;
   margin: auto;
