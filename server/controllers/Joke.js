@@ -13,11 +13,37 @@ const makerPage = (req, res) => {
   });
 };
 
+const getJokePage = (req, res) => {
+  Joke.JokeModel.findAll((err, docs) => {
+    if (err) {
+      console.log(err);
+      res.status(400).json({ error: 'An error occured' });
+    }
+
+    return res.render('jokes', { csrfToken: req.csrfToken(), jokes: docs });
+  });
+};
+
+const aboutPage = (req, res) => res.render('about', { csrfToken: req.csrfToken() });
+
 const getJokes = (request, response) => {
   const req = request;
   const res = response;
 
   return Joke.JokeModel.findByOwner(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occured' });
+    }
+
+    return res.json({ jokes: docs });
+  });
+};
+
+const getAllJokes = (request, response) => {
+  const res = response;
+
+  return Joke.JokeModel.findAll((err, docs) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occured' });
@@ -35,7 +61,7 @@ const makeJoke = (req, res) => {
 
   const jokeData = {
     joke: req.body.joke,
-    score: req.body.score,
+    score: 0,
     owner: req.session.account._id,
   };
 
@@ -57,6 +83,34 @@ const makeJoke = (req, res) => {
   return jokePromise;
 };
 
+//update scores of jokes based on likes
+const UpdateJokeScore = (req, res) => Joke.findByName(req.query.joke, (err, doc) => {
+  if (err) {
+    return res.json({ err });
+  }
+
+  if (!doc) {
+    return res.json({ error: 'No jokes found' });
+  }
+
+  const newJoke = doc;
+
+  newJoke.score = req.query.score;
+
+  const savePromise = newJoke.save();
+
+  savePromise.then(() => res.json({ joke: newJoke.joke, score: newJoke.score }));
+
+    // if save error, just return an error for now
+  savePromise.catch(err);
+
+  return savePromise;
+});
+
 module.exports.makerPage = makerPage;
+module.exports.getJokePage = getJokePage;
+module.exports.aboutPage = aboutPage;
 module.exports.getJokes = getJokes;
+module.exports.getAllJokes = getAllJokes;
 module.exports.make = makeJoke;
+module.exports.updateScore = UpdateJokeScore;

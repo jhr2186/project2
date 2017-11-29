@@ -5,7 +5,7 @@ html, body {
     padding: 0;
     overflow-x: hidden;
     min-width: 780px;
-    background-color: #222;
+    background-color: #333;
 }
 
 #content {
@@ -22,6 +22,10 @@ html, body {
   height: 50px;
   background-color: white;
   border-bottom: 1px solid black;
+}
+
+.getJoke:hover {
+  
 }
 
 #makeJoke {
@@ -182,7 +186,8 @@ nav:nth-child(1) {
     transition: background-color 0.3s ease;
     text-align: center;
     width: 65px;
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
     height: 30px;
     font-size: .9em;
     background-color: #888;
@@ -213,6 +218,31 @@ nav:nth-child(1) {
 #user:focus, #pass:focus, #pass2:focus {
     outline: none;
     box-shadow: 0px 0px 1px 1px #333;
+}
+
+.getJoke {
+  display: inline;
+  text-align: center;
+  width: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 7px;
+  padding-top: 5px;
+  height: 25px;
+  background-color: #888;
+  border-radius: 2px;
+  border: 2px solid black;
+  color: black;
+  font-size: 1em;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  background-color: #b11;
+  float: right;
+}
+
+.getJoke:hover {
+  transition: background-color 0.3s ease;
+  background-color: green;
 }
 
 #domoMessage {
@@ -263,7 +293,7 @@ nav:nth-child(1) {
     border: 2px solid #000;
     border-radius: 4px;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 20px;
     background-color: #444;
 }
 
@@ -286,22 +316,13 @@ nav:nth-child(1) {
     background-color: #bbb;
 }
 
-img.domoFace {
-    margin-left: 25px;
-    margin-right: 10px;
-    height: 50px;
-    width: 50px;
-    border-radius: 4px;
-    margin-top:10px;
-    float:left;
-}
-
 h3.emptyJoke {
     width: 400px;
     font-size: 1.5em;
     margin: 0 auto;
     text-align: center;
-    margin-top: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 h3.jokePunch {
@@ -310,6 +331,19 @@ h3.jokePunch {
     font-weight: bold;
     padding-left: 65px;
     font-size: 1.5em;
+    overflow: hidden;
+}
+
+.jokeScore {
+  float: right;
+  width: 50px;
+  height: 50px;
+  background-color: #888;
+  color: black;
+  margin-right: 10px;
+  text-align: center;
+  font-size: 2.5em;
+  border: 1px solid black;
 }
 
 .joke:first-child {
@@ -318,4 +352,115 @@ h3.jokePunch {
 
 .joke:last-child {
     margin-bottom:10px;
+}
+
+#jokesTitle {
+  text-align: center;
+  width: 40%;
+  margin: auto;
+  margin-top: 20px;
+  border: 2px solid black;
+  background-color: #666;
+  padding: 5px;
+}
+
+#jokeView{
+  height: 680px;
+  transition: background-color 1.4s ease-out;
+}
+
+#jokeScroll{
+  height: 60px;
+  background-color: black;
+  text-align: center;
+}
+
+.displayJoke{
+  text-align: center;
+  vertical-align: middle;
+  
+  height: 360px;
+  width: 80%;
+  margin: auto;
+  padding-top: 200px;
+  font-size: 3em;
+  overflow: visible;
+}
+
+.like, .dislike{
+  width: 100px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.dislike{
+  float: left;
+  margin-left: 10px;
+}
+
+.like{
+  float: right;
+  margin-right: 10px
+}
+
+.nextJoke{
+  width: 160px;
+  height: 40px;
+  margin-top: 10px;
+  border: 3px solid white;
+  background-color: #999;
+  font-size: 1.2em;
+  transition: background-color 1.4s ease-out;
+  transition: color 1.6s ease-out;
+  border-radius: 20px;
+}
+
+.nextJoke:hover{
+  transition: background-color 1.4s ease-out;
+  background-color: #333;
+  transition: color 1.6s ease-out;
+  color: white;
+}
+
+.aboutContent{
+  width: 90%;
+  margin: auto; 
+}
+
+.aboutHeader{
+  text-align: center;
+  margin-top: 80px;
+  text-decoration: underline;
+}
+
+.aboutImg{
+  float: left;
+  margin-right: 10px;
+  width: 320;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.aboutInfo{
+  font-size: 1.4em;
+}
+
+.aboutFooter{
+  width: inherit;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  font-size: 1em;
+}
+
+.aboutLink{
+  color: red;
+}
+
+.aboutLink:hover{
+  color: white;
+}
+
+.aboutLink:visited{
+  color: green;
 }

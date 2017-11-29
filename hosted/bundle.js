@@ -42,7 +42,7 @@ var JokeList = function JokeList(props) {
   if (props.jokes.length === 0) {
     return React.createElement(
       "div",
-      { className: "domoList" },
+      { className: "jokeList" },
       React.createElement(
         "h3",
         { className: "emptyJoke" },
@@ -62,9 +62,9 @@ var JokeList = function JokeList(props) {
         joke.joke
       ),
       React.createElement(
-        "h5",
+        "p",
         {className: "jokeScore" },
-        "Score: ",
+        "",
         joke.score,
       ),
     );
