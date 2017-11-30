@@ -6,7 +6,7 @@ let JokeModel = {};
 
 const convertId = mongoose.Types.ObjectId;
 const setJoke = (joke) => _.escape(joke).trim();
-//const setScore = () => 0;
+// const setScore = () => 0;
 
 const JokeSchema = new mongoose.Schema({
   joke: {

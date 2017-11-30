@@ -83,7 +83,7 @@ const makeJoke = (req, res) => {
   return jokePromise;
 };
 
-//update scores of jokes based on likes
+// update scores of jokes based on likes
 const UpdateJokeScore = (req, res) => Joke.JokeModel.findByName(req.body._id, (err, doc) => {
   if (err) {
     return res.json({ err });
@@ -92,19 +92,19 @@ const UpdateJokeScore = (req, res) => Joke.JokeModel.findByName(req.body._id, (e
   if (!doc) {
     return res.json({ error: 'No jokes found' });
   }
-  
+
   const newJoke = doc;
-  
-  const num = newJoke.score + parseInt(req.body.score);
-  
+
+  const num = newJoke.score + parseInt(req.body.score, 10);
+
   newJoke.score = num;
-  
+
   const savePromise = newJoke.save();
 
-  savePromise.then(() => res.json({_id: newJoke._id, joke: newJoke.joke, score: newJoke.score }));
+  savePromise.then(() => res.json({ _id: newJoke._id, joke: newJoke.joke, score: newJoke.score }));
 
   savePromise.catch(err);
-  
+
   return savePromise;
 });
 
