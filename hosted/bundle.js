@@ -5,8 +5,8 @@ var handleJoke = function handleJoke(e) {
 
   $("#domoMessage").animate({ width: 'hide' }, 350);
 
-  if ($("#jokeName").val() === '') {
-    handleError("Wurst Joke Ever");
+  if ($("#jokeName").val() == '') {
+    handleError("Wurst Joke Ever!");
     return false;
   }
 
@@ -32,7 +32,7 @@ var JokeForm = function JokeForm(props) {
       { htmlFor: "jokePunch" },
       "Joke: "
     ),
-    React.createElement("input", { id: "jokeName", type: "text", name: "joke", placeholder: "Bad dad joke" }),
+    React.createElement("input", { id: "jokeName", type: "text", name: "joke", placeholder: "Bad Dad joke" }),
     React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
     React.createElement("input", { className: "makeJokeSubmit", type: "submit", value: "Create Joke" })
   );
@@ -51,22 +51,21 @@ var JokeList = function JokeList(props) {
     );
   }
 
-  var jokeNodes = props.jokes.map(function (joke) {
+  var jokeNodes = props.jokes.map(function (jokes) {
     return React.createElement(
       "div",
-      { "let": joke._id, className: "joke" },
+      { "let": jokes._id, className: "joke" },
       React.createElement(
         "h3",
         { className: "jokePunch" },
         "Joke: ",
-        joke.joke
+        jokes.joke
       ),
       React.createElement(
-        "p",
-        {className: "jokeScore" },
-        "",
-        joke.score,
-      ),
+        "h3",
+        { className: "jokeScore" },
+        jokes.score
+      )
     );
   });
 
@@ -75,6 +74,10 @@ var JokeList = function JokeList(props) {
     { className: "jokeList" },
     jokeNodes
   );
+};
+
+var DisplayAd = function DisplayAd() {
+  return React.createElement("img", { src: "assets/img/ad.jpg", alt: "ad", className: "ad" });
 };
 
 var loadJokesFromServer = function loadJokesFromServer() {
@@ -87,7 +90,9 @@ var setup = function setup(csrf) {
   ReactDOM.render(React.createElement(JokeForm, { csrf: csrf }), document.querySelector("#makeJoke"));
 
   ReactDOM.render(React.createElement(JokeList, { jokes: [] }), document.querySelector("#jokes"));
-  
+
+  ReactDOM.render(React.createElement(DisplayAd, null), document.querySelector("#mainFooter"));
+
   loadJokesFromServer();
 };
 
@@ -102,6 +107,7 @@ $(document).ready(function () {
 
   console.log("document ready");
 });
+"use strict";
 
 var handleError = function handleError(message) {
   $("#errorMessage").text(message);
@@ -122,7 +128,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
     dataType: "json",
     success: success,
     error: function error(xhr, status, _error) {
-      var messageObj = JSON.parse(xhr.responseText);
+      var messageOb = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
   });

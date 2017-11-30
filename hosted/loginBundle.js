@@ -34,6 +34,8 @@ var handleSignup = function handleSignup(e) {
 
   sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
 
+  document.body.style.minWidth = 780;
+
   return false;
 };
 
@@ -98,13 +100,13 @@ var SignupWindow = function SignupWindow(props) {
 
 var createLoginWindow = function createLoginWindow(csrf) {
   ReactDOM.render(React.createElement(LoginWindow, { csrf: csrf }), document.querySelector("#logins"));
-  
+
   document.body.style.minWidth = 780;
 };
 
 var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#logins"));
-  
+
   document.body.style.minWidth = 1000;
 };
 

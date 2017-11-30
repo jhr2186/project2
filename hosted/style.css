@@ -24,10 +24,6 @@ html, body {
   border-bottom: 1px solid black;
 }
 
-.getJoke:hover {
-  
-}
-
 #makeJoke {
   width: 90%;
   margin: auto;
@@ -378,8 +374,7 @@ h3.jokePunch {
 .displayJoke{
   text-align: center;
   vertical-align: middle;
-  
-  height: 360px;
+  height: 300px;
   width: 80%;
   margin: auto;
   padding-top: 200px;
@@ -391,6 +386,10 @@ h3.jokePunch {
   width: 100px;
   border: 2px solid black;
   border-radius: 10px;
+}
+
+.like:hover, .dislike:hover{
+  cursor: pointer;
 }
 
 .dislike{
@@ -463,4 +462,17 @@ h3.jokePunch {
 
 .aboutLink:visited{
   color: green;
+}
+
+#mainfooter{
+  width: 90%;
+  text-align: center;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.ad{
+  width: 700px;
+  border: 1px solid black;
 }
