@@ -283,6 +283,47 @@ nav:nth-child(1) {
     transform: rotate(330deg);
 }
 
+#passwordChange{
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  margin-top: 60px;
+}
+
+#passwordChange label, #passwordChange input{
+  font-size: 1.2em;
+  display: block;
+  margin: auto;
+}
+
+#passwordChange input{
+  border: 1px solid black;
+  transition: background-color 0.3s ease;
+  background-color: #eee;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#passwordChange input:hover{
+  transition: background-color 0.3s ease;
+  background-color: #bbb
+}
+
+.changePasswordSubmit{
+  width: 200px;
+  height: 40px;
+  margin-top: 15px;
+  border: 1px solid black;
+  transition: background-color 0.3s ease;
+  background-color: #666;
+  border-radius: 5px;
+}
+
+.changePasswordSubmit:hover{
+  transition: background-color 0.3s ease;
+  background-color: #bbb;
+}
+
 #jokes {
     width: 40%;
     min-width: 400px;

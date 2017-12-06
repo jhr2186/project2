@@ -77,6 +77,64 @@ const signup = (request, response) => {
   });
 };
 
+const passwordPage = (req, res) => {
+  res.render('passwordChange', { csrfToken: req.csrfToken() });
+};
+
+const changePassword = (request, response) => {
+  const req = request;
+  const res = response;
+  
+  req.body.username = `${req.body.username}`;
+  req.body.pass = `${req.body.pass}`;
+  req.body.pass2 = `${req.body.pass2}`;
+  
+  //both passwords are filled out
+  if (!req.body.pass || !req.body.pass2) {
+    return res.status(400).json({ error: 'You need two passwords!' });
+  }
+  
+  //passwords are the same
+  if (req.body.pass !== req.body.pass2) {
+    return res.status(400).json({ error: 'Your passwords arent the same, bro' });
+  }
+  
+  //if we are here passwords are valid to change
+  return Account.AccountModel.findByUsername(req.body.user, (err, doc) => {
+    if (err) {
+      return res.json({ err });
+    }
+    
+    if (!doc) {
+      return res.json({ error: 'User is invalid' });
+    }
+    
+    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+      const accountData = {
+        username: doc.username,
+        salt,
+        password: hash,
+      };
+
+      const newAccount = doc;
+      
+      newAccount.password = accountData.password;
+      newAccount.salt = accountData.salt;
+
+      const savePromise = newAccount.save();
+
+      savePromise.then(() => {
+        return res.json({ redirect: '/maker' });
+      });
+
+      savePromise.catch((err) => {
+        console.log(err);
+
+        return res.status(400).json({ error: 'An error occured' });
+      });
+    });
+  });
+};
 
 const getToken = (request, response) => {
   const req = request;
@@ -94,3 +152,5 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+module.exports.passwordPage = passwordPage;
+module.exports.changePassword = changePassword;
