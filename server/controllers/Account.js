@@ -84,31 +84,31 @@ const passwordPage = (req, res) => {
 const changePassword = (request, response) => {
   const req = request;
   const res = response;
-  
+
   req.body.username = `${req.body.username}`;
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
-  
-  //both passwords are filled out
+
+  // both passwords are filled out
   if (!req.body.pass || !req.body.pass2) {
     return res.status(400).json({ error: 'You need two passwords!' });
   }
-  
-  //passwords are the same
+
+  // passwords are the same
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Your passwords arent the same, bro' });
   }
-  
-  //if we are here passwords are valid to change
+
+  // if we are here passwords are valid to change
   return Account.AccountModel.findByUsername(req.body.user, (err, doc) => {
     if (err) {
       return res.json({ err });
     }
-    
+
     if (!doc) {
       return res.json({ error: 'User is invalid' });
     }
-    
+
     return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
       const accountData = {
         username: doc.username,
@@ -117,18 +117,16 @@ const changePassword = (request, response) => {
       };
 
       const newAccount = doc;
-      
+
       newAccount.password = accountData.password;
       newAccount.salt = accountData.salt;
 
       const savePromise = newAccount.save();
 
-      savePromise.then(() => {
-        return res.json({ redirect: '/maker' });
-      });
+      savePromise.then(() => res.json({ redirect: '/maker' }));
 
-      savePromise.catch((err) => {
-        console.log(err);
+      savePromise.catch((err2) => {
+        console.log(err2);
 
         return res.status(400).json({ error: 'An error occured' });
       });
