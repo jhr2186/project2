@@ -115,9 +115,18 @@ const newJoke = () => {
   }
 };
 
+const setUser = () => {
+  const serialized = `owner=${allJokes[jokeIndex].owner}&_csrf=${csrfToken}`;
+  
+  sendAjax('GET', '/setUser', serialized, function(){});
+};
+
 const ViewFooter = () => {
   return (
-    <button className="nextJoke" onClick={newJoke}>Next Joke</button>
+    <div>
+      <button className="viewProfile" onClick={setUser}><a href='/viewProfile'>View Profile</a></button>
+      <button className="nextJoke" onClick={newJoke}>Next Joke</button>
+    </div>
   );
 };
 

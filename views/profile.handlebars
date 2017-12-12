@@ -11,21 +11,21 @@
   <link rel="shortcut icon" href="/assets/img/dad.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 </head>
-<body> 
+<body>
   <nav><a href="/login"><img id="logo" src="/assets/img/dad.png" alt="dad logo"/></a>
-    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
-    <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
+    <div class="navlink"><a href="/logout">Log out</a></div>
   </nav>
-  <section id="logins"></section>
-  <section id="info">
-    <p>
-      Bad Dad Jokes are one of a kind.  This is a website where everyone who loves to crack a dad joke here and there can get together and enjoy each other's jokes together.  If your friend's and families can't stand your terrible puns and jokes, this is where you belong.  Don't worry, you're home now.
-    </p>
+  <section id="getJokes">
+    <div><a class="getJoke" href="/about">About</a></div>
+    <div><a class="getJoke" href="/getJokePage">Discover Jokes</a></div>
+    <div><a class="getJoke" href="/maker">Make Jokes</a></div>
   </section>
-  <section id="content"></section>
+  <h2 id="profileHeader">Their contributed cracks:</h2>
+  <section id="jokes"></section>
+  <section id="mainFooter"></section>
   <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-    <h3><span id="errorMessage">Wrong username or password</span></h3><img id="domo" src="assets/img/wurst.jpg" alt="dad"/>
+    <h3><span id="errorMessage"></span></h3><img id="domo" src="assets/img/wurst.jpg" alt="dad"/>
   </div>
-  <script src="/assets/loginBundle.js"></script>
+  <script src="/assets/profileBundle.js"></script>
 </body>
 </html>

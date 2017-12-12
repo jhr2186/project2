@@ -85,7 +85,6 @@ const changePassword = (request, response) => {
   const req = request;
   const res = response;
 
-  req.body.username = `${req.body.username}`;
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
 
@@ -98,15 +97,17 @@ const changePassword = (request, response) => {
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Your passwords arent the same, bro' });
   }
-
+  
+  console.dir(req.session.account._id);
+  
   // if we are here passwords are valid to change
-  return Account.AccountModel.findByUsername(req.body.user, (err, doc) => {
+  return Account.AccountModel.findByID(req.session.account._id, (err, doc) => {
     if (err) {
       return res.json({ err });
     }
 
     if (!doc) {
-      return res.json({ error: 'User is invalid' });
+      return res.json({ error: 'Invalid Session' });
     }
 
     return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {

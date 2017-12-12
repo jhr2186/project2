@@ -5,7 +5,7 @@ var passwordChange = function passwordChange(e) {
 
   $("#domoMessage").animate({ width: 'hide' }, 350);
 
-  if ($("#user").val() == '' || $("#newpass").val() == '' || $("#newpass2").val() == '') {
+  if ($("#newpass").val() == '' || $("#newpass2").val() == '') {
     handleError("All fields must have a value");
     return false;
   }
@@ -30,12 +30,6 @@ var PasswordForm = function PasswordForm(props) {
       method: "POST",
       className: "passwordForm"
     },
-    React.createElement(
-      "label",
-      { htmlFor: "user" },
-      "Username: "
-    ),
-    React.createElement("input", { id: "userCurrent", type: "text", name: "user", placeholder: "current username" }),
     React.createElement(
       "label",
       { htmlFor: "pass" },
@@ -87,7 +81,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
     dataType: "json",
     success: success,
     error: function error(xhr, status, _error) {
-      var messageOb = JSON.parse(xhr.responseText);
+      var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
   });

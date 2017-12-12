@@ -6,7 +6,6 @@ let JokeModel = {};
 
 const convertId = mongoose.Types.ObjectId;
 const setJoke = (joke) => _.escape(joke).trim();
-// const setScore = () => 0;
 
 const JokeSchema = new mongoose.Schema({
   joke: {
@@ -20,7 +19,6 @@ const JokeSchema = new mongoose.Schema({
     type: Number,
     required: true,
     trim: true,
-    //set: setScore,
   },
 
   owner: {
@@ -38,6 +36,7 @@ const JokeSchema = new mongoose.Schema({
 JokeSchema.statics.toAPI = (doc) => ({
   joke: doc.joke,
   score: doc.score,
+  owner: doc.owner,
 });
 
 JokeSchema.statics.findByOwner = (ownerId, callback) => {
@@ -45,7 +44,7 @@ JokeSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return JokeModel.find(search).select('joke score').exec(callback);
+  return JokeModel.find(search).select('joke score owner').exec(callback);
 };
 
 JokeSchema.statics.findByName = (id, callback) => {
@@ -57,7 +56,7 @@ JokeSchema.statics.findByName = (id, callback) => {
 };
 
 JokeSchema.statics.findAll = (callback) => {
-  JokeModel.find().select('joke score').exec(callback);
+  JokeModel.find().select('joke score owner').exec(callback);
 };
 
 JokeModel = mongoose.model('Joke', JokeSchema);

@@ -3,7 +3,7 @@ const passwordChange = (e) => {
   
   $("#domoMessage").animate({width:'hide'}, 350);
   
-  if($("#user").val() == '' || $("#newpass").val() == '' || $("#newpass2").val() == '') {
+  if($("#newpass").val() == '' || $("#newpass2").val() == '') {
     handleError("All fields must have a value");
     return false;
   }
@@ -27,8 +27,6 @@ const PasswordForm = (props) => {
           method="POST"
           className="passwordForm"
       >
-      <label htmlFor="user">Username: </label>
-      <input id="userCurrent" type="text" name="user" placeholder="current username"/>
       <label htmlFor="pass">Password: </label>
       <input id="newpass" type="password" name="pass" placeholder="new password"/>
       <label htmlFor="pass2">Password: </label>

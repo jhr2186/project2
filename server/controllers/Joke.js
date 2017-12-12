@@ -2,6 +2,8 @@ const models = require('../models');
 
 const Joke = models.Joke;
 
+let currentUser;
+
 const makerPage = (req, res) => {
   Joke.JokeModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
@@ -31,6 +33,20 @@ const getJokes = (request, response) => {
   const res = response;
 
   return Joke.JokeModel.findByOwner(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occured' });
+    }
+
+    return res.json({ jokes: docs });
+  });
+};
+
+const getJokesByUser = (request, response) => {
+  const req = request;
+  const res = response;
+
+  return Joke.JokeModel.findByOwner(currentUser, (err, docs) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occured' });
@@ -108,6 +124,14 @@ const UpdateJokeScore = (req, res) => Joke.JokeModel.findByName(req.body._id, (e
   return savePromise;
 });
 
+const viewProfile = (req, res) => res.render('profile', { csrfToken: req.csrfToken()});
+
+const setUser = (req, res) => {
+  currentUser = req.query.owner;
+  
+  return res.json(req.query.owner);
+};
+
 module.exports.makerPage = makerPage;
 module.exports.getJokePage = getJokePage;
 module.exports.aboutPage = aboutPage;
@@ -115,3 +139,6 @@ module.exports.getJokes = getJokes;
 module.exports.getAllJokes = getAllJokes;
 module.exports.make = makeJoke;
 module.exports.updateScore = UpdateJokeScore;
+module.exports.viewProfile = viewProfile;
+module.exports.getJokesByUser = getJokesByUser;
+module.exports.setUser = setUser;

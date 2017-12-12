@@ -1,43 +1,5 @@
 "use strict";
 
-var handleJoke = function handleJoke(e) {
-  e.preventDefault();
-
-  $("#domoMessage").animate({ width: 'hide' }, 350);
-
-  if ($("#jokeName").val() == '') {
-    handleError("Wurst Joke Ever!");
-    return false;
-  }
-
-  sendAjax('POST', $("#jokeForm").attr("action"), $("#jokeForm").serialize(), function () {
-    loadJokesFromServer();
-  });
-
-  return false;
-};
-
-var JokeForm = function JokeForm(props) {
-  return React.createElement(
-    "form",
-    { id: "jokeForm",
-      onSubmit: handleJoke,
-      name: "jokeForm",
-      action: "/maker",
-      method: "POST",
-      className: "jokeForm"
-    },
-    React.createElement(
-      "label",
-      { htmlFor: "jokePunch" },
-      "Joke: "
-    ),
-    React.createElement("input", { id: "jokeName", type: "text", name: "joke", placeholder: "Bad Dad joke" }),
-    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "makeJokeSubmit", type: "submit", value: "Create Joke" })
-  );
-};
-
 var JokeList = function JokeList(props) {
   if (props.jokes.length === 0) {
     return React.createElement(
@@ -81,14 +43,12 @@ var DisplayAd = function DisplayAd() {
 };
 
 var loadJokesFromServer = function loadJokesFromServer() {
-  sendAjax('GET', '/getJokes', null, function (data) {
+  sendAjax('GET', '/getJokesByUser', null, function (data) {
     ReactDOM.render(React.createElement(JokeList, { jokes: data.jokes }), document.querySelector("#jokes"));
   });
 };
 
 var setup = function setup(csrf) {
-  ReactDOM.render(React.createElement(JokeForm, { csrf: csrf }), document.querySelector("#makeJoke"));
-
   ReactDOM.render(React.createElement(JokeList, { jokes: [] }), document.querySelector("#jokes"));
 
   ReactDOM.render(React.createElement(DisplayAd, null), document.querySelector("#mainFooter"));

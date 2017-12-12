@@ -123,11 +123,30 @@ var newJoke = function newJoke() {
   }
 };
 
+var setUser = function setUser() {
+  var serialized = 'owner=' + allJokes[jokeIndex].owner + '&_csrf=' + csrfToken;
+
+  sendAjax('GET', '/setUser', serialized, function () {});
+};
+
 var ViewFooter = function ViewFooter() {
   return React.createElement(
-    'button',
-    { className: 'nextJoke', onClick: newJoke },
-    'Next Joke'
+    'div',
+    null,
+    React.createElement(
+      'button',
+      { className: 'viewProfile', onClick: setUser },
+      React.createElement(
+        'a',
+        { href: '/viewProfile' },
+        'View Profile'
+      )
+    ),
+    React.createElement(
+      'button',
+      { className: 'nextJoke', onClick: newJoke },
+      'Next Joke'
+    )
   );
 };
 
@@ -179,7 +198,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
     dataType: "json",
     success: success,
     error: function error(xhr, status, _error) {
-      var messageOb = JSON.parse(xhr.responseText);
+      var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
   });

@@ -4,8 +4,11 @@ const mid = require('./middleware');
 const router = (app) => {
   app.get('/getToken', mid.requiresSecure, controllers.Account.getToken);
   app.get('/getJokes', mid.requiresLogin, controllers.Joke.getJokes);
+  app.get('/getJokesByUser', mid.requiresLogin, controllers.Joke.getJokesByUser);
   app.get('/getALLJokes', mid.requiresLogin, controllers.Joke.getAllJokes);
   app.get('/getJokePage', mid.requiresLogin, controllers.Joke.getJokePage);
+  app.get('/viewProfile', mid.requiresLogin, controllers.Joke.viewProfile);
+  app.get('/setUser', mid.requiresLogin, controllers.Joke.setUser);
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
