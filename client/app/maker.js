@@ -10,6 +10,8 @@ const handleJoke = (e) => {
   
   sendAjax('POST', $("#jokeForm").attr("action"), $("#jokeForm").serialize(), function() {
     loadJokesFromServer();
+    
+    document.querySelector("#jokeForm").reset();
   });
   
   return false;
@@ -24,7 +26,7 @@ const JokeForm = (props) => {
           method="POST"
           className="jokeForm"
       >
-      <label htmlFor="jokePunch">Joke: </label>
+      <label htmlFor="joke">Joke: </label>
       <input id="jokeName" type="text" name="joke" placeholder="Bad Dad joke" />
       <input type="hidden" name="_csrf" value={props.csrf}/>
       <input className="makeJokeSubmit" type="submit" value="Create Joke"/>

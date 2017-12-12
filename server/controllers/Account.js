@@ -97,9 +97,9 @@ const changePassword = (request, response) => {
   if (req.body.pass !== req.body.pass2) {
     return res.status(400).json({ error: 'Your passwords arent the same, bro' });
   }
-  
+
   console.dir(req.session.account._id);
-  
+
   // if we are here passwords are valid to change
   return Account.AccountModel.findByID(req.session.account._id, (err, doc) => {
     if (err) {

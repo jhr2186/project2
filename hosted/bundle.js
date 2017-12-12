@@ -12,6 +12,8 @@ var handleJoke = function handleJoke(e) {
 
   sendAjax('POST', $("#jokeForm").attr("action"), $("#jokeForm").serialize(), function () {
     loadJokesFromServer();
+
+    document.querySelector("#jokeForm").reset();
   });
 
   return false;
@@ -29,7 +31,7 @@ var JokeForm = function JokeForm(props) {
     },
     React.createElement(
       "label",
-      { htmlFor: "jokePunch" },
+      { htmlFor: "joke" },
       "Joke: "
     ),
     React.createElement("input", { id: "jokeName", type: "text", name: "joke", placeholder: "Bad Dad joke" }),

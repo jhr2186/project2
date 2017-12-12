@@ -60,7 +60,7 @@ AccountSchema.statics.findByID = (id, callback) => {
   const search = {
     _id: new ObjectID(id),
   };
-  
+
   return AccountModel.findOne(search, callback);
 };
 

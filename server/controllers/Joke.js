@@ -43,7 +43,6 @@ const getJokes = (request, response) => {
 };
 
 const getJokesByUser = (request, response) => {
-  const req = request;
   const res = response;
 
   return Joke.JokeModel.findByOwner(currentUser, (err, docs) => {
@@ -71,7 +70,6 @@ const getAllJokes = (request, response) => {
 
 const makeJoke = (req, res) => {
   if (!req.body.joke) {
-    console.log(req.body);
     return res.status(400).json({ error: 'Wurst joke ever!' });
   }
 
@@ -124,11 +122,11 @@ const UpdateJokeScore = (req, res) => Joke.JokeModel.findByName(req.body._id, (e
   return savePromise;
 });
 
-const viewProfile = (req, res) => res.render('profile', { csrfToken: req.csrfToken()});
+const viewProfile = (req, res) => res.render('profile', { csrfToken: req.csrfToken() });
 
 const setUser = (req, res) => {
   currentUser = req.query.owner;
-  
+
   return res.json(req.query.owner);
 };
 
